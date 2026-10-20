@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marigold Diner — Order Pad</title>
+<meta name="description" content="A working 1950s diner order pad with seat tabs, kitchen tickets, receipts, tipping and a daily blue plate special.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Yellowtail&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="counter-scene">
+<div class="diner">
+
+<h1 class="sr-only">Marigold Diner order pad</h1>
+<header class="storefront">
+  <div class="sign-plate">
+    <span class="sign-script">Marigold</span>
+    <span class="sign-word">Diner</span>
+    <span class="sign-sub">Fine short orders · fountain service · est. 1953</span>
+  </div>
+  <div class="storefront-side">
+    <div class="open-badge">Open</div>
+    <p class="clock-line"><span id="dayName">Thursday</span><span id="dinerClock">10:42</span></p>
+    <p class="take-line">Today's take <strong id="todayTake">$0.00</strong> · <span id="todayChecks">0</span> checks</p>
+    <p class="storefront-note">123 Route 9 · Breakfast served all day</p>
+  </div>
+</header>
+
+<div class="chrome-strip" aria-hidden="true"></div>
+
+<main class="service">
+
+  <section class="menu-sheet" aria-labelledby="menuHeading">
+    <header class="menu-top">
+      <div class="menu-title">
+        <span class="mini-script">Bill of</span>
+        <h2 id="menuHeading">Fare</h2>
+      </div>
+      <p class="menu-note">Griddle<br>Plates<br>Sandwiches<br>Fountain</p>
+    </header>
+
+    <div class="special-card">
+      <p class="special-kicker">Blue plate · <span id="specialDay">Thursday</span></p>
+      <h3 id="specialName">Thursday Turkey &amp; Dressing</h3>
+      <p class="special-desc" id="specialDesc">Roast turkey, sage dressing, giblet gravy.</p>
+      <div class="special-foot">
+        <span class="special-price" id="specialPrice">$13.75</span>
+        <button type="button" class="special-add" id="specialAdd">Add to seat <span id="specialSeat">1</span></button>
+        <span class="menu-count" id="specialBadge" hidden></span>
+      </div>
+    </div>
+
+    <div class="menu-tabs" id="menuCategories" role="group" aria-label="Menu categories"></div>
+    <ul class="menu-list" id="menuList"></ul>
+    <p class="menu-foot">Coffee refills a nickel · no substitutions · pie sold by the slice</p>
+  </section>
+
+  <section class="order-pad" aria-labelledby="padHeading">
+    <header class="pad-head">
+      <div>
+        <p class="pad-script">Guest</p>
+        <h2 id="padHeading">Check</h2>
+      </div>
+      <div class="check-stamp">No. <span id="checkNo">014</span></div>
+    </header>
+
+    <div class="pad-meta">
+      <label class="meta-field" for="tableInput">Table <input id="tableInput" type="number" min="1" max="99" inputmode="numeric" value="4"></label>
+      <label class="meta-field" for="serverSelect">Server
+        <select id="serverSelect">
+          <option>Dot</option>
+          <option>Marge</option>
+          <option>Hank</option>
+          <option>Pearl</option>
+        </select>
+      </label>
+      <span class="pad-date" id="padDate">THU · OCT 20</span>
+    </div>
+
+    <div class="seat-tabs" id="seatTabs" role="group" aria-label="Seat tabs"></div>
+    <p class="seat-caption"><strong id="seatHeading">Seat 1</strong> · <span id="seatSubtotal">$0.00</span> · <span id="itemCount">0 items</span></p>
+
+    <ul class="order-lines" id="orderLines"></ul>
+
+    <div class="pad-totals">
+      <div class="total-row"><span>Subtotal</span><strong id="subtotalOut">$0.00</strong></div>
+      <div class="total-row"><span>Tax <em>8.25%</em></span><strong id="taxOut">$0.00</strong></div>
+      <div class="tip-block">
+        <div class="tip-head"><span>Tip <em id="tipRateLabel">15%</em></span><strong id="tipAmount">$0.00</strong></div>
+        <div class="tip-buttons" id="tipButtons" role="group" aria-label="Tip percentage">
+          <button type="button" data-tip="0" aria-pressed="false">0</button>
+          <button type="button" data-tip="0.1" aria-pressed="false">10</button>
+          <button type="button" data-tip="0.15" aria-pressed="true">15</button>
+          <button type="button" data-tip="0.18" aria-pressed="false">18</button>
+          <button type="button" data-tip="0.2" aria-pressed="false">20</button>
+        </div>
+      </div>
+      <div class="total-row grand"><span>Check total</span><strong id="totalOut">$0.00</strong></div>
+    </div>
+
+    <p class="pad-message" id="padMessage">Two eggs, coffee, and a little patience.</p>
+
+    <div class="pad-actions">
+      <button type="button" class="close-check" id="closeCheck">Settle &amp; close</button>
+      <span class="void-hint">Void the check inside the close-out slip.</span>
+    </div>
+  </section>
+
+  <aside class="tickets" aria-label="Service slips">
+    <article class="kitchen-ticket" aria-labelledby="kitchenHeading">
+      <header class="kitchen-head">
+        <span class="kitchen-brand">Grill</span>
+        <strong id="kitchenNo">#014</strong>
+      </header>
+      <p class="kitchen-meta">Table <span id="kitchenTable">4</span> · <span id="kitchenServer">DOT</span> · <span id="kitchenTime">10:42</span></p>
+      <h2 class="sr-only" id="kitchenHeading">Kitchen ticket</h2>
+      <ul class="kitchen-list" id="kitchenList"></ul>
+      <p class="ticket-empty" id="kitchenEmpty" hidden>All quiet on the grill.</p>
+      <div class="ticket-actions">
+        <button type="button" id="fireAll">Fire ticket</button>
+        <button type="button" id="serveAll">All served</button>
+      </div>
+      <p class="ticket-foot">Ticket stays with the cook</p>
+    </article>
+
+    <article class="guest-receipt" aria-labelledby="receiptHeading">
+      <p class="receipt-logo">Marigold</p>
+      <p class="receipt-tag">Diner · 123 Route 9</p>
+      <p class="receipt-line">Check <span id="receiptNo">#014</span> · Table <span id="receiptTable">4</span></p>
+      <p class="receipt-line">Server <span id="receiptServer">DOT</span> · <span id="receiptTime">10:42</span></p>
+      <h2 class="sr-only" id="receiptHeading">Customer receipt</h2>
+      <ul class="receipt-list" id="receiptList"></ul>
+      <div class="receipt-totals">
+        <div><span>Subtotal</span><span id="receiptSubtotal">$0.00</span></div>
+        <div><span>Tax</span><span id="receiptTax">$0.00</span></div>
+        <div><span>Tip</span><span id="receiptTip">$0.00</span></div>
+        <div class="receipt-grand"><span>Total</span><span id="receiptTotal">$0.00</span></div>
+      </div>
+      <p class="receipt-status" id="receiptStatus">No open check</p>
+      <p class="receipt-thanks">Thank you, come back soon</p>
+      <div class="barcode" aria-hidden="true"></div>
+    </article>
+  </aside>
+
+</main>
+
+<div class="chrome-strip lower" aria-hidden="true"></div>
+<div class="floor-band" aria-hidden="true"></div>
+<p class="floor-note">Sweep the floor before you lock up · Marigold Diner · Route 9</p>
+
+</div>
+</div>
+
+<dialog id="closeDialog" class="close-dialog" aria-labelledby="dialogTitle">
+  <div class="close-sheet">
+    <p class="receipt-logo small">Marigold</p>
+    <h2 id="dialogTitle">Close check #014</h2>
+    <p class="dialog-meta" id="dialogMeta">Table 4 · Dot</p>
+    <p class="dialog-open" id="dialogOpen">All items served.</p>
+    <div class="receipt-totals dialog-totals">
+      <div><span>Subtotal</span><span id="dialogSubtotal">$0.00</span></div>
+      <div><span>Tax</span><span id="dialogTax">$0.00</span></div>
+      <div><span>Tip</span><span id="dialogTip">$0.00</span></div>
+      <div class="receipt-grand"><span>Total</span><span id="dialogTotal">$0.00</span></div>
+    </div>
+    <p class="dialog-error" id="dialogError" hidden></p>
+    <div class="dialog-actions">
+      <button type="button" class="dialog-settle" id="settleBtn">Settle &amp; start new check</button>
+      <button type="button" class="dialog-void" id="voidBtn">Void check</button>
+      <button type="button" class="dialog-keep" id="keepBtn">Keep editing</button>
+    </div>
+    <p class="dialog-foot">A settled check is added to today's take.</p>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" hidden><span id="toastText"></span></div>
+<div class="sr-only" id="live" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
