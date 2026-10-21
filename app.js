@@ -822,6 +822,10 @@
     $("dialogError").hidden = true;
   });
 
+  $("receiptPrint").addEventListener("click", function () {
+    window.print();
+  });
+
   renderMenuTabs();
   renderMenu();
   renderAll();
